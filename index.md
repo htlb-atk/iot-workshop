@@ -78,7 +78,6 @@ Der Workshop gliedert sich in folgende Teilaufgaben:
 
 ## Übersicht Datenfluss und Kommunikation
 Das folgende Diagramm zeigt das Zusammenspiel der einzelnen Komponenten und ist die **wichtigste Abbildung** in diesem Workshop. Das Diagramm liefert den roten Faden. Wenn der Überblick verloren geht, bitte an diesem Diagramm neu orientieren. Es muss zu jedem Zeitpunkt klar sein, an welchem "Kästchen" wir arbeiten.
-
 ![](./media/IoT_Datenfluss_gesamt.png)
 
 # Das „Ding“: LoPy
@@ -123,11 +122,11 @@ Der LoPy hat bereits einen MicroPython Interpreter eingebaut, es wird daher kein
   3. Der LoPy wird an eine USB-Schnittstelle angeschlossen und von dort auch mit Energie versorgt. Auf dem PC erscheint die Verbindung als zusätzliche COM-Schnittstelle.
   4. \>\>\> zeigt eine erfolgreiche Verbindung mit dem LoPy an. Am oberen Rand des Fensters wird „Connected“ angezeigt. Einige Male die Enter-Taste drücken: Jedesmal muss ein neuer Prompt (\>\>\>)angezeigt werden.   
     Failed to connect:  
-	 Standardmäßig wird automatisch die höchste USB-Schnittstelle für die Kommunikationmit dem Board verwendet.
+	 Standardmäßig wird automatisch die höchste USB-Schnittstelle für die Kommunikation mit dem Board verwendet.
 	 ![](./media/Atom_Settings_Autoconnect.png)
     Eventuell muss zuerst noch die richtige Schnittstelle manuell eingestellt werden.  
 	 Autoconnect on USB deaktivieren.
-    Mit More --\>Get Serial Ports werden alle erkannten Schnittstellen angezeigt.  
+    Mit More --\> Get Serial Ports werden alle erkannten Schnittstellen angezeigt.  
     ![](./media/image11.png)
     Unter Settings Global Settings Device Address wird die gewünschte COM eingetragen.
     ![](./media/image12.png)
@@ -183,7 +182,7 @@ siehe auch [**Wikipedia: SPI-Bus**](https://de.wikipedia.org/wiki/Serial_Periphe
 Viele Einstellungsmöglichkeiten sind unter anderem deshalb erforderlich, weil die Spezifikation für den SPI-Bus in vielen Eigenschaften nicht festgelegt ist, wodurch verschiedene, zueinander inkompatible Geräte existieren. Häufig ist beispielsweise für jedes angeschlossene IC eine eigene Konfiguration des steuernden Mikrocontrollers (Master des SPI-Bus) erforderlich.
 ### LoPy SPI-Bus
 Der LoPy besitzt eine Hardware-SPI-Schnittstelle. Die Klasse "SPI" stellt Funktionen für die Buskommunikation zur Verfügung.  
-Der Link [<span class="underline">https://docs.pycom.io/chapter/firmwareapi/pycom/machine/SPI.html</span>](https://docs.pycom.io/chapter/firmwareapi/pycom/machine/SPI.html)
+Der Link [<span class="underline">https://docs.pycom.io/firmwareapi/pycom/machine/spi.html</span>](https://docs.pycom.io/firmwareapi/pycom/machine/spi.html)
 führt zur detaillierten Dokumentation.
 
 Die gesamte Kommunikation mit dem MAX31865 ist in einer Klasse
@@ -590,7 +589,7 @@ eingefügt.
 Das fertige Programm steht in der Datei main\_template.py und kann in die Datei main.py kopiert werden (Inhalt überschreiben oder vorher alles löschen).
 Unbedingt notwendige Anpassungen:
    1. Die API Keys müssen durch die eigenen ThingSpeak Keys ersetzt werden\!
-   2. CHANNEL_ID durch eignen ChannelID ersetzen.
+	2. CHANNEL_ID durch eignen ChannelID ersetzen.
 	3. net.ssid und WLAN Passwort in wlan.connect an das eignen WLAN anpassen.
 	4. Die clientID "fe058e3f82b94a968fb8bc10ccc" verändern, damit nicht zwei LoPy die geiche ID verwenden. Einfach ein paar beliebige Zeichen verändern. Nur die Ziffern 0-9 und die Buchstaben a-f verwenden.
 	5. Falls vom DHCP Server keine DNS Adresse vergeben wird, muss in MQTTClient() die IP-Adresse von mqtt.thingspeak.com eingetragen werden.
