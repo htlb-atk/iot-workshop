@@ -589,8 +589,8 @@ eingefügt.
 Das fertige Programm steht in der Datei main\_template.py und kann in die Datei main.py kopiert werden (Inhalt überschreiben oder vorher alles löschen).
 Unbedingt notwendige Anpassungen:
 1. Die API Keys müssen durch die eigenen ThingSpeak Keys ersetzt werden!
-2. CHANNEL_ID durch eignen ChannelID ersetzen.
-3. net.ssid und WLAN Passwort in wlan.connect an das eignen WLAN anpassen.
+2. CHANNEL_ID durch eigene ChannelID ersetzen.
+3. net.ssid und WLAN Passwort in wlan.connect an das eigene WLAN anpassen.
 4. Die clientID "fe058e3f82b94a968fb8bc10ccc" verändern, damit nicht zwei LoPy die geiche ID verwenden. Einfach ein paar beliebige Zeichen verändern. Nur die Ziffern 0-9 und die Buchstaben a-f verwenden.
 5. Falls vom DHCP Server keine DNS Adresse vergeben wird, muss in MQTTClient() die IP-Adresse von mqtt.thingspeak.com eingetragen werden.
 
