@@ -1,15 +1,5 @@
----
-title: IoT Workshop HTLB
-author: Kurt Albrecht
----
-# IoT Workshop
-
-In diesem Workshop erstellen wir gemeinsam eine einfache IoT Anwendung.
-
-Wir messen mit einem Sensor die Temperatur einer Maschine, verbinden den Sensor über SPI -Bus mit einem IoT-Controller (LoPy) und übertragen die Messwerte zur ThingSpeak Plattform in die Cloud. Dort stellen wir die Messwerte graphisch dar und analysieren sie. Wenn der Temperaturgradient zu groß ist, wird eine E-Mail Nachricht auf das Handy gesendet.
 <!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [IoT Workshop](#iot-workshop)
 	- [Komponenten einer IoT Anwendung](#komponenten-einer-iot-anwendung)
 	- [Übersicht Datenfluss und Kommunikation](#übersicht-datenfluss-und-kommunikation)
 - [Das „Ding“: LoPy](#das-ding-lopy)
@@ -23,8 +13,8 @@ Wir messen mit einem Sensor die Temperatur einer Maschine, verbinden den Sensor 
 	- [SPI-Bus Interface](#spi-bus-interface)
 		- [Eigenschaften](#eigenschaften)
 		- [LoPy SPI-Bus](#lopy-spi-bus)
-		- [Anwendung der Klasse lopy\_max31865](#anwendung-der-klasse-lopymax31865)
 		- [Klasse lopy\_max31865](#klasse-lopymax31865)
+		- [Anwendung der Klasse lopy\_max31865](#anwendung-der-klasse-lopymax31865)
 	- [Temperaturwerte auslesen](#temperaturwerte-auslesen)
 		- [Bibliothek „lopy\_max31865“ auf den LoPy übertragen.](#bibliothek-lopymax31865-auf-den-lopy-übertragen)
 		- [REPL](#repl)
@@ -85,7 +75,7 @@ Der Workshop gliedert sich in folgende Teilaufgaben:
 ## Übersicht Datenfluss und Kommunikation
 Das folgende Diagramm zeigt das Zusammenspiel der einzelnen Komponenten und ist die **wichtigste Abbildung** in diesem Workshop. Das Diagramm liefert den roten Faden. Wenn der Überblick verloren geht, bitte an diesem Diagramm neu orientieren. Es muss zu jedem Zeitpunkt klar sein, an welchem "Kästchen" wir arbeiten.
 
-![](./media/image4.png)
+![](./media/IoT_Datenfluss_gesamt.png)
 
 # Das „Ding“: LoPy
 
@@ -129,10 +119,13 @@ Der LoPy hat bereits einen MicroPython Interpreter eingebaut, es wird daher kein
   3. Der LoPy wird an eine USB-Schnittstelle angeschlossen und von dort auch mit Energie versorgt. Auf dem PC erscheint die Verbindung als zusätzliche COM-Schnittstelle.
   4. \>\>\> zeigt eine erfolgreiche Verbindung mit dem LoPy an. Am oberen Rand des Fensters wird „Connected“ angezeigt. Einige Male die Enter-Taste drücken: Jedesmal muss ein neuer Prompt (\>\>\>)angezeigt werden.   
     Failed to connect:  
-    Eventuell muss zuerst noch die richtige Schnittstelle eingestellt werden.  
+	 Standardmäßig wird automatisch die höchste USB-Schnittstelle für die Kommunikationmit dem Board verwendet.
+	 ![](./media/Atom_Settings_Autoconnect.png)
+    Eventuell muss zuerst noch die richtige Schnittstelle manuell eingestellt werden.  
+	 Autoconnect on USB deaktivieren.
     Mit More --\>Get Serial Ports werden alle erkannten Schnittstellen angezeigt.  
     ![](./media/image11.png)
-    Unter Settings Global Settings Device Address wird die höchste COM eingetragen (Strg-v).
+    Unter Settings Global Settings Device Address wird die gewünschte COM eingetragen.
     ![](./media/image12.png)
 
 # Temperaturmessung
@@ -140,26 +133,27 @@ Der LoPy hat bereits einen MicroPython Interpreter eingebaut, es wird daher kein
 ## Adafruit Interface Board
 
 Die integrierte Schaltung MAX31865.pdf wandelt ein Widerstandsverhältnis in einen 15bit Digitalwert. Die Schaltung ist besonders für die Auswertung von PT100 und PT1000 Elementen geeignet. Die Kommunikation mit dem LoPy erfolgt über das SPI-Bus Interface.  
-[<span class="underline">Datenblatt MAX31865</span>](https://htlbr-my.sharepoint.com/personal/kurt_albrecht_htl-bregenz_ac_at/_layouts/15/guestaccess.aspx?docid=0092d8dc759404bde9f372b9aacc891cd&authkey=AdsadokQa5XxAF3X3ueB76w&e=941dfe278d4441e68b2792e1083d88ac).  
+[<span class="underline">Datenblatt MAX31865</span>](./media/datenblatt_max31865.pdf).  
 Wir verwenden das Interface Board "Adafruit PT100 RTD Temperature Sensor Amplifier - MAX31865". Das Board ist unter anderem mit einem MAX31865 und einem Referenzwiderstand mit 430Ω bestückt.      
 ![Adafruit MAX31865 Interface Board](./media/image13.png)
 Datenblatt: [<span class="underline">adafruit-max31865-rtd-pt100-amplifier.pdf</span>](.\media\adafruit-max31865-rtd-pt100-amplifier.pdf)
 ### Verdrahtung LoPy - MAX31865 Interface Board
 
-![Verdrahtung LoPy](./media/image14.png)
-Verdrahtungsplan als PDF-Datei: [<span class="underline">Verdrahtungsplan</span>](./media/Verdrahtung\ LoPy\ MAX31865.pdf)
+![Verdrahtung LoPy](./media/Verdrahtung_LoPy_MAX31865_P12-P14.png)
 
+Verdrahtungsplan als PDF-Datei: [<span class="underline">Verdrahtungsplan</span>](./media/Verdrahtung_LoPy_MAX31865_P12-P14.pdf)
 > Aktivität: LoPY mit MAX31865 Board verdrahten.
 
 ### Verdrahtung mit Steckplatine
 
 ![Verdrahtung-Steckplatine](./media/image15.png)
+__Achtung:__ Die Position der weißen Leitung ist auf der Abbildung veraltet! --> siehe Verdrahtungsplan.
 
 ## SPI-Bus Interface
 
 ### Eigenschaften
 
-siehe auch [**SPI-Bus**](https://de.wikipedia.org/wiki/Serial_Peripheral_Interface)
+siehe auch [**Wikipedia: SPI-Bus**](https://de.wikipedia.org/wiki/Serial_Peripheral_Interface)
 
   - Drei gemeinsame Leitungen, an denen jeder Teilnehmer angeschlossen ist.
       - SCLK (Serial Clock) auch SCK, wird vom Master zur Synchronisation ausgegeben
@@ -191,21 +185,6 @@ führt zur detaillierten Dokumentation.
 Die gesamte Kommunikation mit dem MAX31865 ist in einer Klasse
 (Bibliothek) abgelegt und kann in das eigene Programm importiert werden.
 
-### Anwendung der Klasse lopy\_max31865
-
-Die Klasse „lopy\_max31865.py“ stellt die Verbindung zum Interface-Board her. Dort wird die ganze Kommunikation mit dem IC MAX31865 abgewickelt. Auch die Umrechnung der 15bit-Zahl in eine Temperatur in °C erfolgt in dieser Klasse. Der Anwender kann mit der Methode „read()“ die Temperatur auslesen.
-
-```python
-   # Die Klasse lopy_max31865 in das eigene Programm importieren  
-   from lopy_max31865 import MAX31865
-
-   # Ein neues Objekt mit dem Namen rtd anlegen  
-   rtd = MAX31865()
-
-   # Die Temperatur in °C auslesen  
-   temp = rtd.read()
-```
-
 ### Klasse lopy\_max31865
 
 Die Klasse „lopy\_max31865.py“ wickelt die Kommunikation mit dem MAX31865 über den SPI Bus ab, und stellt dem Anwenderprogramm Funktionen zum Auslesen der Temperatur bereit. Zu diesem Zweck verwendet sie nur
@@ -223,9 +202,27 @@ drei SPI-Funktionen:
 ```
 
 Der MicroPython Programmcode für die Klasse „lopy\_max31865“ steht unter:  
-[<span class="underline">https://github.com/htlb-atk/schilf-iot-MAX31865/blob/master/lib/lopy\_max31865.py</span>](https://github.com/htlb-atk/schilf-iot-MAX31865/blob/master/lib/lopy_max31865.py)
+[<span class="underline">https://github.com/htlb-atk/iot-workshop/blob/master/lib/lopy\_max31865.py</span>](https://github.com/htlb-atk/schilf-iot-MAX31865/blob/master/lib/lopy_max31865.py)
 
 Für andere Bausteine mit SPI-Schnittstelle kann diese Klasse als Ausgangbasis dienen.
+
+### Anwendung der Klasse lopy\_max31865
+
+Die Klasse „lopy\_max31865.py“ stellt die Verbindung zum Interface-Board her. Dort wird die ganze Kommunikation mit dem IC MAX31865 abgewickelt. Auch die Umrechnung der 15bit-Zahl in eine Temperatur in °C erfolgt in dieser Klasse. Der Anwender kann mit der Methode „read()“ die Temperatur auslesen.
+
+Bevor wir das ausprobieren können, müssen wir uns aber noch die Programmbibliothek von GitHub holen und auf den LoPy übertragen.
+
+```python
+   # Die Klasse lopy_max31865 in das eigene Programm importieren  
+   from lopy_max31865 import MAX31865
+
+   # Ein neues Objekt mit dem Namen rtd anlegen  
+   rtd = MAX31865()
+
+   # Die Temperatur in °C auslesen  
+   temp = rtd.read()
+```
+
 
 ## Temperaturwerte auslesen
 
@@ -237,17 +234,14 @@ In Atom ist ein GitHub Client integriert. Es können ganz einfach ganze Reposito
 
 #### Clone Repository von GitHub
 
-  1. [<span class="underline">http://github.com/</span>](http://github.com/)
-     Search: schilf iot
-     ![](./media/image17.png)
-  2. Repository „htlb-atk/schilf-iot-MAX31865“ auswählen
-     ![](./media/image18.png)
-  3. Download-Link in die Zwischenablage kopieren
-     ![](./media/image19.png)
-     ![](./media/image20.png)
-  4. Zurück zum Atom Editor, mit Strg-Shift-P die Command Palette öffnen und "GitHub: Clone wählen" .
+  1. Das Repository [<span class="underline">https://github.com/htlb-atk/iot-workshop</span>](https://github.com/htlb-atk/iot-workshop/) auswählen
+  2. Download-Link in die Zwischenablage kopieren
+     ![](./media/image19a.png)
+     ![](./media/image20a.png)
+	  Falls "Copy to Clipboard" vom Browser verhindert wird, muss die URL markiert und mit Ctrl-c in die Zwischenablage kopiert werden.
+  3. Zurück zum Atom Editor, mit Strg-Shift-P (macOS: Cmd-Shift-P) die Command Palette öffnen und "GitHub: Clone wählen" .
      ![](./media/image21.png)
-  5. Mit Strg-v den Pfad aus der Zwischenablage in das Feld „Clone from“ einsetzen.
+  4. Mit Strg-v den Pfad aus der Zwischenablage in das Feld „Clone from“ einsetzen.
      ![](./media/image22.png)
 
 Damit wird das komplette Repository in das Verzeichnis Z:\\github kopiert und als Projekt in Atom geöffnet. GitHub bietet viele Möglichkeiten zur gemeinsamen Codeentwicklung. In diesem Workshop werden wir jedoch keine weiteren Funktionalitäten von GitHub verwenden.
@@ -280,9 +274,9 @@ Wir schreiben nun diese Befehle in die Datei main.py und packen sie in eine Schl
       time.sleep(5)
    ```
 
-    WICHTIG:  
+    *WICHTIG:*  
     In Python werden alle Zeilen, die zu einer while-Schleife gehören, gleich weit eingerückt. Leerzeichen am Zeilenanfang dürfen **nicht** beliebig eingefügt werden\! Dies ist ein wesentlicher Unterschied zu anderen Programmiersprachen. Besonders bei verschachtelten Schleifen, If-Abfragen und kopierten Codeblöcken muss auf die Einrückung geachtet werden.
-  3. Programm abspeichern\! Sync erkennt sonst keine Änderung und überträgt nichts.
+  3. Programm __abspeichern__\! Sync erkennt sonst keine Änderung und überträgt nichts.
   4. Sync / Upload
     ![](./media/image28.png)
 
@@ -291,14 +285,17 @@ Das Programm wird mit Sync an den LoPy übertragen und sofort ausgeführt.
 Im nächsten Schritt müssen wir uns die IoT Plattform ThingSpeak einrichten, damit wir anschließend die Temperaturwerte dorthin übertragen können.
 
 # ThingSpeak
-
+In diesem Abschnitt werden wir Messwerte an ThingSpeak übertragen. Die folgende Abbildung zeigt noch einmal den Datenfluss zu ThingSpeak.
+![](./media/IoT_Datenfluss_1.png)
 ## ThingSpeak Konto einrichten
 
 Für diesen Workshop verwenden wir ein Gratiskonto von ThingSpeak. ThingSpeak ist die IoT-Plattform der Firma MathWorks, die auch die MATLAB/Simulink Produkte anbietet. MATLAB/Simulink ist an der HTL-Bregenz für alle Lehrer und Schüler lizensiert. Damit uns für die Auswertungen alle MATLAB-Funktionen zur Verfügung stehen, müssen wir uns mit einer **Schul-E-Mail-Adresse** registrieren.
 
 1. [<span class="underline">https://thingspeak.com</span>](https://thingspeak.com)
    ![Thingspeak-01](./media/image29.png)
+
 2. Unbedingt mit der **Schul-E-Mail-Adresse** registrieren. ![Thingspeak Sign Up](./media/image30.png)
+Das Feld "UserID" muss unbedingt ausgefüllt werden!
 3. An die E-Mail-Adresse wird eine Bestätigungs-Link gesendet (dauert ein paar Sekunden). E-Mail öffnen und "Verify your email" klicken. ![Tingspeak Verify E-Mail](./media/image31.png)
 4. ThingSpeak Webseite öffnen [<span class="underline">https://thingspeak.com</span>](https://thingspeak.com)
    ![ThingSpeak Sign In](./media/image32.png)
@@ -390,17 +387,17 @@ Auf der Seite mit den API Keys werden auch Beispiele für HTTP-Aufrufe angezeigt
 Wir können das Feld "Update a Channel Feed" kopieren, anpassen und im Browser (z.B. Internet Explorer) ausprobieren.
 
 1. Feldinhalt "Update a Channel Feed" kopieren
-   `GET https://api.thingspeak.com/update?api_key=UPTTFJC3VVxxxxxx\&field1=0`
+   `GET https://api.thingspeak.com/update?api_key=UPTTFJC3VVxxxxxx&field1=0`
 2. Das GET muss entfernt werden, der Webbrowser sendet standardmäßig einen GET Request:
-   `https://api.thingspeak.com/update?api_key=UPTTFJC3VVxxxxxx\&field1=0`
+   `https://api.thingspeak.com/update?api_key=UPTTFJC3VVxxxxxx&field1=0`
 3. Der Temperaturwert steht in unserem Channel *motor\_1* im Feld 1 (Tu). Wir senden den Wert 19.9 an den Channel. Im Parameter api\_key muss der "Write API Key" mitgesendet werden, der für jeden Channel einen eigenen Wert besitzt.
-   `https://api.thingspeak.com/update?api_key=UPTTFJC3VVxxxxxx\&field1=19.9`
+   `https://api.thingspeak.com/update?api_key=UPTTFJC3VVxxxxxx&field1=19.9`
 4. In unserem Channel sehen wir nun den ersten Datenpunkt.
    [https://thingspeak.com/channels/**381619**/private_show](https://thingspeak.com/channels/381619/private_show)   
    Channel ID **381619** durch die **eigene Channel ID** ersetzen\!   
    ![show channel](./media/image46.png)
 
-**Achtung:** Mit einem kostenlosen ThingSpeak Konto kann höchstens alle 15s ein Update an den Channel gesendet werden. Bezahlte Konten dürfen einmal pro Sekunde updaten.
+**Achtung:** Mit einem kostenlosen ThingSpeak Konto kann höchstens alle **15s** ein Update an den Channel gesendet werden. Bezahlte Konten dürfen einmal pro Sekunde updaten.
 
 > Jedes Gerät/Programm, das eine Webseite aufrufen kann, kann auch Daten in einen ThingSpeak Channel schreiben\!
    > [<span class="underline">https://api.thingspeak.com/update?api\_key=XXXXXXXXXX\&field1=19.9</span>](https://api.thingspeak.com/update?api_key=XXXXXXXXXX&field1=19.9)
@@ -422,27 +419,27 @@ Für das Austesten von REST API Aufrufen ist das Programm **Postman** sehr hilfr
 
 Über eine grafische Oberfläche können API Aufrufe erstellt, abgespeichert und gesendet werden. Antworten des Servers werden im unteren Bereich angezeigt. Mit Postman sieht man sehr genau, was tatsächlich an den Server (Parameter, Header, Body, ...) gesendet wird.
 
-Aufrufe können in Postman erstellt und getestet werden. Wenn der Aufrufin Postman funktioniert, kann er in das eigene Programm (z.B. auf dem LoPy) eingebaut werden.
+Aufrufe können in Postman erstellt und getestet werden. Wenn der Aufruf in Postman funktioniert, kann er in das eigene Programm (z.B. auf dem LoPy) eingebaut werden.
 Auch für die Fehlersuche ist das Programm Postman sehr empfehlenswert.
 
-#### RequestBin
+#### Hookbin
 
-Für die Fehlersuche ist es oft nützlich zu sehen, was beim Server überhaupt ankommt. Diese Frage kann RequestBin beantworten.
-[<span class="underline">https://requestb.in</span>](https://requestb.in)
+Für die Fehlersuche ist es oft nützlich zu sehen, was beim Server überhaupt ankommt. Diese Frage kann _hookbin_ beantworten.
+[<span class="underline">https://hookbin.com</span>](https://hookbin.com)
 
-![Inspect HTTP Requests](./media/image48.png)
+![Inspect HTTP Requests](./media/hookbin.png)
 
-„Create a RequestBin“ liefert eine URL zurück, an die beliebige http-Aufrufe gesendet werden können.
+„CREATE NEW ENDPOINT“ liefert eine URL zurück, an die beliebige http-Aufrufe gesendet werden können.
 
-![RequestBin URL](./media/image49.png)
+![RequestBin URL](./media/hookbin_endpoint.png)
 
 **Beispiel:** Der Aufruf   
-[<span class="underline">https://requestb.in/uii7yqui?api\_key=UPTTFJC3VV33GQ\&field1=19.0</span>](https://requestb.in/uii7yqui?api_key=UPTTFJC3VV33GQ&field1=19.0)   
+[<span class="underline">https://hookb.in/Z23D0eNWbkC7q7eYQmqa?api\_key=UPTTFJC3VV33QGZ\&field1=19.0</span>](https://hookb.in/Z23D0eNWbkC7q7eYQmqa?api_key=UPTTFJC3VV33QGZ&field1=19.0)   
 liefert
 
-![HTTP Request Details](./media/image50.png)
+![HTTP Request Details](./media/hookbin_request.png)
 
-Die vom Server empfangenen Parameter und Header werden detailliert aufgelistet. Nach spätesten 48h wird die URL automatisch gelöscht.
+Die vom Server empfangenen Parameter und Header werden detailliert aufgelistet.
 
 ### MQTT API
 
@@ -517,8 +514,9 @@ Die Authentifizierung des Clients erfolgt auch hier wieder über API Keys. Für 
 
 Wir können nun mit einem Online MQTT Client einen Temperaturwert an unseren ThingSpeak Channel senden. Dieser Test empfiehlt sich, bevor wir mit unserem eigenen Programm vom LoPy aus publizieren.
 
-Einen freien MQTT Client gibt es unter:
+Einen freien online MQTT Client gibt es unter:
 [<span class="underline">http://www.hivemq.com/demos/websocket-client/</span>](http://www.hivemq.com/demos/websocket-client/).
+Es gibt auch eine Vielzahl von MQTT Clients für Android oder iOS. Damit können Werte mit dem Smartphone an Thingspeak übertragen werden.
 
 1. Für den Verbindungsaufbau wird der **MQTT API Key** benötigt.
    ![hivemqtt websocket client](./media/image57.png)
@@ -532,6 +530,8 @@ Einen freien MQTT Client gibt es unter:
    ![HIVEMQ Disconnect](./media/image60.png)
 
 > Publish ist damit erfolgreich getestet. Wir wissen nun, dass das Topic richtig ist und der API Key für den Verbindungsaufbau stimmt.
+
+Falls es Probleme mit dem Verbindungsaufau gibt, könnte es auch an der Firewall liegen. Ein Test mit einem MQTT Client auf dem Smartphone und einer LTE Verbindung sollte in jedem Fall erfolgreich sein.
 
 # LoPy – ThingSpeak
 
@@ -583,7 +583,13 @@ eingefügt.
    time.sleep(30)
 ```
 
-Das fertige Programm steht in der Datei main\_template.py und kann in die Datei main.py kopiert werden (Inhalt überschreiben oder vorher alles löschen). Die API Keys müssen durch die eigenen ThingSpeak Keys ersetzt werden\!
+Das fertige Programm steht in der Datei main\_template.py und kann in die Datei main.py kopiert werden (Inhalt überschreiben oder vorher alles löschen).
+Unbedingt notwendige Anpassungen:
+   1. Die API Keys müssen durch die eigenen ThingSpeak Keys ersetzt werden\!
+   2. CHANNEL_ID durch eignen ChannelID ersetzen.
+	3. net.ssid und WLAN Passwort in wlan.connect an das eignen WLAN anpassen.
+	4. Die clientID "fe058e3f82b94a968fb8bc10ccc" verändern, damit nicht zwei LoPy die geiche ID verwenden. Einfach ein paar beliebige Zeichen verändern. Nur die Ziffern 0-9 und die Buchstaben a-f verwenden.
+	5. Falls vom DHCP Server keine DNS Adresse vergeben wird, muss in MQTTClient() die IP-Adresse von mqtt.thingspeak.com eingetragen werden.
 
 ```python
  import time
@@ -598,7 +604,7 @@ Das fertige Programm steht in der Datei main\_template.py und kann in die Datei 
  for net in nets:
      if net.ssid == 'WLAN-HTLB':
          print('Network found!')
-         wlan.connect(net.ssid, auth=(WLAN.WPA2, 'xxxxxxxxxx'), timeout=5000)
+         wlan.connect(net.ssid, auth=(WLAN.WPA2, 'WLAN Passwort'), timeout=5000)
          while not wlan.isconnected():
              machine.idle() # save power while waiting
          print('WLAN connection succeeded!')
@@ -608,22 +614,22 @@ Das fertige Programm steht in der Datei main\_template.py und kann in die Datei 
  rtd = MAX31865()
 
  # Connect to thingspeak; password= MQTT API Key
- thingspeak = MQTTClient("fe058e3f82b94a968fb8bc10ccc", "52.5.134.229", port=1883, user="atkiot", password="MQTT_API_KEY")
+ thingspeak = MQTTClient("fe058e3f82b94a968fb8bc10ccc", "mqtt.thingspeak.com", port=1883, user="atkiot", password="MQTT_API_KEY")
  thingspeak.connect(clean_session=True)
  while True:
      temp = rtd.read()
      print('Temperatur: ',temp)
      # publish temp
-     thingspeak.publish("channels/347424/publish/fields/field1/WRITE_API_KEY",str(temp));
+     thingspeak.publish("channels/CHANNEL_ID/publish/fields/field1/WRITE_API_KEY",str(temp));
      time.sleep(30)
  thingspeak.disconnect()
 ```
 
 Dateien **abspeichern** nicht vergessen.
 
-Nach einem „Sync“ sollte nun alle 30s ein Temperaturwert an unseren ThingSpeak Channel „motor\_1“ gesendet werden.
+Nach einem Sync/Upload sollte nun alle 30s ein Temperaturwert an unseren ThingSpeak Channel „motor\_1“ gesendet werden.
 
-**Achtung:** Mit einem kostenlosen ThingSpeak Konto kann höchstens alle 15s ein Update an den Channel gesendet werden. Bezahlte Konten dürfen einmal pro Sekunde updaten.
+**Achtung:** Mit einem kostenlosen ThingSpeak Konto kann höchstens alle **15s** ein Update an den Channel gesendet werden. Bezahlte Konten dürfen einmal pro Sekunde updaten.
 
 # Auswertung der Daten mit MATLAB und IFTTT
 
@@ -787,14 +793,14 @@ In diesem Workshop haben wir alle Komponenten einer IoT-Anwendung kennengelernt.
 Jede dieser Komponenten kann einfach ausgetauscht werden, da sie über Standardprotokolle miteinander in Verbinung stehen.  
 Beispiele:  
 
-- Sensor: einfache Schalter, Barometer, 6DOF-Sensor, GPS
+- Sensor: einfache Schalter, DS18B20 Temperatursensor mit on-wire Schnittstelle, Barometer, 9DOF-Sensor (BNO055), GPS
 - Interface: I2C Bus
-- Mikrocontroller: Arduino, C32000, Raspberry
-- Die WLAN-Anbindung kann leicht durch eine LoRaWAN-Anbindung an TheThingsNetwork (TTN) ausgetauscht werden.
-- Cloud Service: ThingWorx, Linuxserver mit InfluxDB
+- Mikrocontroller: Arduino, ESP32, C32000, Raspberry
+- Die WLAN-Anbindung kann leicht durch eine LoRaWAN-Anbindung an TheThingsNetwork (TTN) ausgetauscht werden. Dann ist es aber einfacher,  TagoIO als Cloud Service zu verwenden.
+- Cloud Service: TagoIO, ThingWorx, Linuxserver mit InfluxDB
 - Visualisieren: grafana
 - Reagieren: Zapier
 
 
 Zusammengestellt von Kurt Albrecht, HTL Bregenz.  
-Letzte Änderung: 2018-01-07
+Letzte Änderung: 2019-04-28
