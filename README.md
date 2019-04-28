@@ -1,4 +1,4 @@
-# schilf-iot-MAX31865
+# IoT Workshop
 Code für den IoT Workshop  
 
-Dokumentation [hier](https://htlb-atk.github.io/schilf-iot-MAX31865)
+Dokumentation [hier](https://htlb-atk.github.io/iot-workshop)
