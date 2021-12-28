@@ -493,7 +493,7 @@ zu finden. Wir beschränken uns auf [<span class="underline">Publish to a Channe
 
 ##### Broker
 
-Der ThingSpeak MQTT Broker ist unter der URL `mqtt.thingspeak.com` erreichbar. Der Port hängt vom Verbindungstyp ab.
+Der ThingSpeak MQTT Broker ist unter der URL `mqtt3.thingspeak.com` erreichbar. Der Port hängt vom Verbindungstyp ab.
 ![Thingspeak Broker Ports](./media/image52.png)
 
 ##### Topic
@@ -762,53 +762,7 @@ Wie können wir nun das Trigger-Ereignis *Motor1TuRisingFast* von ThingSpeak aus
 ![](./media/image88.png)
 `{event}`muss durch den gewünschten Trigger-Event (hier: *Motor1TuRisingFast*) ersetzt werden:
 `https://maker.ifttt.com/trigger/Motor1TuRisingFast/with/key/pXXuT_od2Ifxxxxxxxxxxxx`    
-`pXXuT_od2Ifxxxxxxxxxxxx...` ist der API-Key und <!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-	- [Komponenten einer IoT Anwendung](#komponenten-einer-iot-anwendung)
-	- [Übersicht Datenfluss und Kommunikation](#übersicht-datenfluss-und-kommunikation)
-- [Das „Ding“: LoPy](#das-ding-lopy)
-	- [LoPy Developement Boards](#lopy-developement-boards)
-	- [Expansion Board](#expansion-board)
-	- [Atom Editor mit pymakr plug-in](#atom-editor-mit-pymakr-plug-in)
-- [Temperaturmessung](#temperaturmessung)
-	- [Adafruit Interface Board](#adafruit-interface-board)
-		- [Verdrahtung LoPy - MAX31865 Interface Board](#verdrahtung-lopy-max31865-interface-board)
-		- [Verdrahtung mit Steckplatine](#verdrahtung-mit-steckplatine)
-	- [SPI-Bus Interface](#spi-bus-interface)
-		- [Eigenschaften](#eigenschaften)
-		- [LoPy SPI-Bus](#lopy-spi-bus)
-		- [Klasse lopy\_max31865](#klasse-lopymax31865)
-		- [Anwendung der Klasse lopy\_max31865](#anwendung-der-klasse-lopymax31865)
-	- [Temperaturwerte auslesen](#temperaturwerte-auslesen)
-		- [Bibliothek „lopy\_max31865“ auf den LoPy übertragen.](#bibliothek-lopymax31865-auf-den-lopy-übertragen)
-		- [REPL](#repl)
-		- [Python Programm](#python-programm)
-- [ThingSpeak](#thingspeak)
-	- [ThingSpeak Konto einrichten](#thingspeak-konto-einrichten)
-	- [ThingSpeak Channel](#thingspeak-channel)
-		- [Neuen Channel erstellen](#neuen-channel-erstellen)
-	- [ThingSpeak API](#thingspeak-api)
-		- [REST API](#rest-api)
-		- [MQTT API](#mqtt-api)
-- [LoPy – ThingSpeak](#lopy-thingspeak)
-	- [WLAN Verbindung](#wlan-verbindung)
-	- [MQTT Client](#mqtt-client)
-- [Auswertung der Daten mit MATLAB und IFTTT](#auswertung-der-daten-mit-matlab-und-ifttt)
-	- [Neuer Channel für die Auswertung](#neuer-channel-für-die-auswertung)
-		- [Neuen Channel *motor\_1\_calc* anlegen](#neuen-channel-motor1calc-anlegen)
-		- [MATLAB Analysis](#matlab-analysis)
-		- [Reaktion auf neuen Temperaturwert](#reaktion-auf-neuen-temperaturwert)
-		- [Reaktion auf große Temperaturänderung](#reaktion-auf-groe-temperaturänderung)
-- [IFTTT (If This Than That)](#ifttt-if-this-than-that)
-	- [IFTTT Konto anlegen](#ifttt-konto-anlegen)
-	- [IFTTT Applet erstellen](#ifttt-applet-erstellen)
-	- [IFTTT mit ThingSpeak verbinden](#ifttt-mit-thingspeak-verbinden)
-		- [Webhooks Dokumentation](#webhooks-dokumentation)
-		- [ThingHTTP Request erstellen](#thinghttp-request-erstellen)
-		- [React erstellen](#react-erstellen)
-- [Zusammenfassung](#zusammenfassung)
-
-<!-- /TOC -->ist für jeden IFTTT Benutzer unterschiedlich.
+`pXXuT_od2Ifxxxxxxxxxxxx...` ist der API-Key und ist für jeden IFTTT Benutzer unterschiedlich.
 4. Testen   
 „Test It“ löst den Trigger aus, die Aktion „E-Mail senden“ wird ausgeführt. Innerhalb weniger Sekunden sollte die E-Mail von IFTTT eintreffen. Man könnte auch die https-Zeile in den Browser kopieren und die Seite abrufen.
 
@@ -852,4 +806,4 @@ Beispiele:
 
 
 Zusammengestellt von Kurt Albrecht, HTL Bregenz.  
-Letzte Änderung: 2019-04-28
+Letzte Änderung: 2021-12-28
